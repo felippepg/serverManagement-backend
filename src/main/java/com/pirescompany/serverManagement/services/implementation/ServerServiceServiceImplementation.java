@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 @Slf4j
 public class ServerServiceServiceImplementation implements ServerServiceInterface {
 
@@ -68,6 +70,7 @@ public class ServerServiceServiceImplementation implements ServerServiceInterfac
 
     private String setServerImageUrl() {
         String[] imagesNames = {"server1.png", "server2.png", "server3.png"};
-        return String.valueOf(ServletUriComponentsBuilder.fromCurrentContextPath().path("server/image/" + imagesNames[new Random().nextInt(3)]));
+        var uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("server/image/" + imagesNames[new Random().nextInt(3)]);
+        return uri.toUriString();
     }
 }
