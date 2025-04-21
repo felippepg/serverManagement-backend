@@ -4,6 +4,7 @@ import com.pirescompany.serverManagement.dto.Response;
 import com.pirescompany.serverManagement.enumerated.Status;
 import com.pirescompany.serverManagement.model.Server;
 import com.pirescompany.serverManagement.services.implementation.ServerServiceServiceImplementation;
+import com.pirescompany.serverManagement.services.interfaces.ServerServiceInterface;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 @RequiredArgsConstructor
 public class ServerResource {
 
-    private final ServerServiceServiceImplementation service;
+    private final ServerServiceInterface service;
 
     @GetMapping("/list")
     public ResponseEntity<Response> getServers() {
@@ -39,7 +40,7 @@ public class ServerResource {
         );
     }
 
-    @GetMapping("/ping/{idAddress}")
+    @GetMapping("/ping/{ipAddress}")
     public ResponseEntity<Response> pingServer(@PathVariable("ipAddress") String ipAddress) throws IOException {
         var server = service.ping(ipAddress);
         return ResponseEntity.ok(
